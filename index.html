@@ -12,17 +12,15 @@
         .header h2 { color: var(--card-bg); margin: 0; font-size: 1.8rem; font-style: italic; }
         .stats { font-size: 1.2rem; font-weight: bold; color: #333; margin-top: 5px; }
 
-        /* The Grid for the Memory Cards */
         .game-board {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             max-width: 400px;
             width: 100%;
-            perspective: 1000px; /* Gives the 3D flipping depth */
+            perspective: 1000px; 
         }
 
-        /* The Card Container */
         .card {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -32,12 +30,8 @@
             transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
         }
 
-        /* When the 'flipped' class is added via JavaScript */
-        .card.flipped {
-            transform: rotateY(180deg);
-        }
+        .card.flipped { transform: rotateY(180deg); }
 
-        /* Front and Back of the card */
         .card-front, .card-back {
             width: 100%;
             height: 100%;
@@ -49,9 +43,9 @@
             justify-content: center;
             font-size: 2.5rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden; /* Keeps images inside the rounded corners */
         }
 
-        /* The back of the card (what you see before clicking) */
         .card-back {
             background-color: var(--card-bg);
             background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px);
@@ -59,11 +53,17 @@
             font-size: 2rem;
         }
 
-        /* The front of the card (the actual image/emoji) */
         .card-front {
             background-color: white;
             transform: rotateY(180deg);
             border: 3px solid var(--card-bg);
+        }
+
+        /* NEW: Ensures your uploaded photos fit the square cards perfectly */
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
         }
 
         .card.matched .card-front {
@@ -103,9 +103,13 @@
     <button id="resetBtn" onclick="initGame()">重新開始</button>
 
     <script>
-        // You can later replace these emojis with image filenames like 'car1.jpg'
-        const items = ['🏎️', '🏆', '🏁', '🔧', '⛽', '🚥', '🚓', '🚑'];
-        let cards = [...items, ...items]; // Create pairs
+        // NEW: We replaced the first emoji with your uploaded car1.jpg file!
+        const items = [
+            '<img src="car1.jpg">', 
+            '🏆', '🏁', '🔧', '⛽', '🚥', '🚓', '🚑'
+        ];
+        
+        let cards = [...items, ...items]; 
         let flippedCards = [];
         let matchedPairs = 0;
         let moves = 0;
@@ -176,7 +180,7 @@
                     flippedCards[1].classList.remove('flipped');
                     flippedCards = [];
                     isLocked = false;
-                }, 1000); // 1 second delay before flipping back
+                }, 1000); 
             }
         }
 
