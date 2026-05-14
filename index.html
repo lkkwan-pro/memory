@@ -43,7 +43,7 @@
             justify-content: center;
             font-size: 2.5rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow: hidden; /* Keeps images inside the rounded corners */
+            overflow: hidden; 
         }
 
         .card-back {
@@ -59,7 +59,6 @@
             border: 3px solid var(--card-bg);
         }
 
-        /* NEW: Ensures your uploaded photos fit the square cards perfectly */
         .card-front img {
             width: 100%;
             height: 100%;
@@ -94,7 +93,7 @@
 <body>
 
     <div class="header">
-        <h2>🏎️ F1 記憶大考驗</h2>
+        <h2>🏎️ 記憶大考驗</h2>
         <div class="stats">步數: <span id="moves">0</span></div>
     </div>
 
@@ -103,10 +102,11 @@
     <button id="resetBtn" onclick="initGame()">重新開始</button>
 
     <script>
-        // NEW: We replaced the first emoji with your uploaded car1.jpg file!
+        // We now have TWO custom photos alongside the F1 emojis!
         const items = [
             '<img src="car1.jpg">', 
-            '🏆', '🏁', '🔧', '⛽', '🚥', '🚓', '🚑'
+            '<img src="mother.jpg">',
+            '🏆', '🏁', '🔧', '🚥', '🚓', '🚑'
         ];
         
         let cards = [...items, ...items]; 
