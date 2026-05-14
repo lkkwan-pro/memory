@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>F1 記憶大考驗</title>
+    <title>F1 記憶大考驗 - 進階版</title>
     <style>
         :root { --bg: #2B2B2B; --card-bg: #E10600; --card-found: #4CAF50; }
-        body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f0f0f0; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; touch-action: manipulation; }
+        body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f0f0f0; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 15px; touch-action: manipulation; }
         
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h2 { color: var(--card-bg); margin: 0; font-size: 1.8rem; font-style: italic; }
-        .stats { font-size: 1.2rem; font-weight: bold; color: #333; margin-top: 5px; }
+        .header { text-align: center; margin-bottom: 15px; }
+        .header h2 { color: var(--card-bg); margin: 0; font-size: 1.6rem; font-style: italic; }
+        .stats { font-size: 1.1rem; font-weight: bold; color: #333; margin-top: 5px; }
 
+        /* The Grid now automatically handles 6 rows based on the number of cards */
         .game-board {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 8px; /* Slightly smaller gap to fit 6 rows better on screens */
             max-width: 400px;
             width: 100%;
             perspective: 1000px; 
@@ -27,7 +28,7 @@
             cursor: pointer;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
         }
 
         .card.flipped { transform: rotateY(180deg); }
@@ -37,12 +38,12 @@
             height: 100%;
             position: absolute;
             backface-visibility: hidden;
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-size: 2rem; /* Reduced slightly to fit smaller cards safely */
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             overflow: hidden; 
         }
 
@@ -50,13 +51,13 @@
             background-color: var(--card-bg);
             background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px);
             color: white;
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
         .card-front {
             background-color: white;
             transform: rotateY(180deg);
-            border: 3px solid var(--card-bg);
+            border: 2px solid var(--card-bg);
         }
 
         .card-front img {
@@ -77,9 +78,9 @@
         }
 
         #resetBtn {
-            margin-top: 30px;
-            padding: 12px 25px;
-            font-size: 1.2rem;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
             background-color: #333;
             color: white;
             border: none;
@@ -93,7 +94,7 @@
 <body>
 
     <div class="header">
-        <h2>🏎️ 記憶大考驗</h2>
+        <h2>🏎️ 記憶大考驗 (難度升級!)</h2>
         <div class="stats">步數: <span id="moves">0</span></div>
     </div>
 
@@ -102,11 +103,12 @@
     <button id="resetBtn" onclick="initGame()">重新開始</button>
 
     <script>
-        // We now have TWO custom photos alongside the F1 emojis!
+        // We now have 12 items to create a 4x6 grid (24 cards total)
         const items = [
             '<img src="car1.jpg">', 
             '<img src="mother.jpg">',
-            '🏆', '🏁', '🔧', '🚥', '🚓', '🚑'
+            '🏆', '🏁', '🔧', '🚥', '🚓', '🚑',
+            '🏎️', '⏱️', '📻', '🥇' // Added 4 new items here!
         ];
         
         let cards = [...items, ...items]; 
@@ -170,8 +172,9 @@
                 flippedCards[1].classList.add('matched');
                 matchedPairs++;
                 flippedCards = [];
+                // Game checks if all 12 pairs are found
                 if (matchedPairs === items.length) {
-                    setTimeout(() => alert(`恭喜！你用了 ${moves} 步完成！🎉`), 500);
+                    setTimeout(() => alert(`太勁啦！你用了 ${moves} 步完成最高難度！🎉`), 500);
                 }
             } else {
                 isLocked = true;
